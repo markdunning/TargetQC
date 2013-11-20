@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<pipe:pipeline xmlns:pipe="http://cancerresearchuk.org/pipeline/1.3"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://cancerresearchuk.org/pipeline/1.3 http://uk-cri-lbio01/schema/workflow/pipeline-1.3.xsd">
+
+    <name>Target QC</name>
+    <description>Pipeline for target-enrichment QC</description>
+
+
+    <tasks>
+      
+        <specialisationSet name="doAllCoverage" type="GATKPreProcess" variable="barcode">
+   	    	     
+	  <subtasks>
+      	<task name="coverageBed" type="coverageBed">
+	      <resources>
+                <memory>3G</memory>
+            </resources>
+	  <inputs>
+	    <input name="bamFile">${MergedBams}/${barcode}.bam</input>
+	    <input name="regionsFile">${regionsFile}</input>
+	  </inputs>  
+	  <outputs>
+	    <output name="perBaseCoverage">${outDir}/Coverage/${barcode}.cov</output>
+	    <output name="ampliconDepths">${outDir}/Coverage/${barcode}.ampDepth.txt</output>
+	  </outputs>
+	  
+	</task>
+
+	</subtasks>
+      </specialisationSet>
+	
+      
+      <task name="compareCoverage" type="compareCoverage">
+	
+	<depends>
+	  <task>doAllCoverage</task>
+	</depends>
+	
+	<outputs>
+	  <output name="depthPlot">${outDir}/Coverage/ampliconDepths.png</output>
+	  <output name="summaryPlot">${outDir}/Coverage/depthSummary.png</output>
+	</outputs>    
+	
+	<arguments>
+	  <arg name="covDir">${outDir}/Coverage</arg>
+	</arguments>
+	
+      </task>
+      
+      
+      
+      <task name="makeOffTargetBed" type="complementTargets">
+	
+	<inputs>
+	  <input name="regionsFile">${regionsFile}</input>
+	  <input name="genome">${genome}</input>
+	</inputs>
+	
+	<outputs>
+	  <output name="offregionsFile">${offregionsFile}</output>
+	</outputs>
+	
+      </task>
+	  
+      
+      
+	
+	<task name="GCRegionsProcess" type="GCRegionsProcess">
+
+	 <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+   	     <input name="bed">${regionsFile}</input>
+   	     <input name="fasta">${refFASTA}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="GCContentFile"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${GCoutfile}</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+      
+      	<task name="MergingBedProcess" type="MergingBedProcess">  
+	  <inputs>
+	    <input name="bed">${regionsFile}</input>
+	  </inputs>
+	      
+	      <outputs>
+		<output name="mergedpeakbed">${regionsFile}.unique</output>
+	      </outputs>
+	 <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>
+		<arg name="ReadLength">100</arg>
+	</arguments> 
+	      
+	    </task>
+
+
+	<specialisationSet name="ProfileFeatureCaller" type="ProfileFeatureCaller" variable="trio">
+	<depends>
+	  <task>makeOffTargetBed</task>
+	  <task>MergingBedProcess</task>
+	</depends>  
+
+	<subtasks> 
+	  
+	  
+
+	    
+       
+	  
+	  
+	  
+	 <task name="CountInBedProcess" type="CountInBedProcess">
+
+
+	 <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+   	     <input name="bed">${regionsFile}.unique</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="targetCount"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_ontarget.count</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+
+
+	 <task name="CountMappedProcess" type="CountMappedProcess">
+
+	 <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="MappedCount"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_Total.count</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+
+
+	 <task name="CountOffBedProcess" type="CountInBedProcess">
+
+	
+	 <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+
+	
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+   	     <input name="bed">${offregionsFile}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="targetCount"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_offtarget.count</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+
+
+
+
+	 <task name="CoveraqeProfilesProcess" type="CoveraqeProfilesProcess">
+
+	 <resources>
+            <memory>8G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+   	     <input name="bed">${regionsFile}.unique</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="hist"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_ontarget.hist</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+
+
+	 <task name="OffCoveraqeProfilesProcess" type="OffCoveraqeProfilesProcess">
+
+	 <resources>
+            <memory>8G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+
+	
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+   	     <input name="offbed">${offregionsFile}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="offtargethist"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_offtarget.hist</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+ 
+      </task>
+
+	 <task name="OffCoveraqe_GrepAllFromHistProcess" type="OffCoverage_GrepAllFromHistProcess">
+	<depends>
+	     <task>OffCoveraqeProfilesProcess</task>
+	</depends> 
+	 <resources>
+            <memory>2G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="offorontargethist">${WorkingDirectory}/FeatureProfiles/${Barcode}_offtarget.hist</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="justall_targethist"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_JustAll_offtarget.hist</output>
+       </outputs>
+
+      </task>
+
+	 <task name="OnCoveraqe_GrepAllFromHistProcess" type="OnCoverage_GrepAllFromHistProcess">
+	<depends>
+	     <task>CoveraqeProfilesProcess</task>
+	</depends> 
+	 <resources>
+            <memory>2G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="offorontargethist">${WorkingDirectory}/FeatureProfiles/${Barcode}_ontarget.hist</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="justall_targethist"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_JustAll_ontarget.hist</output>
+       </outputs>
+
+      </task>
+
+	 <task name="IntersectProcess" type="IntersectProcess">
+
+	 <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="bam">${MergedBams}/${Barcode}.bam</input>
+   	     <input name="bed">${offregionsFile}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="filteredbam"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_filtered.bam</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+
+      </task>
+
+	 <task name="BedgraphProcess" type="BedgraphProcess">
+	<depends>
+	     <task>IntersectProcess</task>
+	</depends> 
+       <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="bam_processed">${WorkingDirectory}/FeatureProfiles/${Barcode}_filtered.bam</input>
+   	     <input name="genome">${genome}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="Bedgraph"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_filtered.bedgraph</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+
+      </task>
+
+	 <task name="BigWigProcess" type="BigWigProcess">
+	<depends>
+	     <task>BedgraphProcess</task>
+	</depends> 
+       <resources>
+            <memory>4G</memory>
+		<!--<cpus>4</cpus>-->
+        </resources>
+        
+	<inputs>
+            <input name="Wig">${WorkingDirectory}/FeatureProfiles/${Barcode}_filtered.bedgraph</input>
+   	     <input name="genome">${genome}</input>
+       </inputs>
+	     
+       <outputs>
+               <output name="BigBed"  deleteOnFailure="true">${WorkingDirectory}/FeatureProfiles/${Barcode}_filtered.bw</output>
+       </outputs>
+
+       <arguments>
+    	        <arg name="TheDirectory">${WorkingDirectory}</arg>		
+	</arguments> 
+
+      </task>
+	</subtasks>
+	</specialisationSet>
+
+
+
+
+    </tasks>
+
+	 
+    
+    
+    
+</pipe:pipeline>
+

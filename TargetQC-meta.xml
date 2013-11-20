@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<meta:metadata xmlns:meta="http://cancerresearchuk.org/pipeline-meta/1.3"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://cancerresearchuk.org/pipeline-meta/1.3 http://uk-cri-lbio01/schema/workflow/metadata-1.3.xsd">
+    <mode>lsf</mode>
+    <pipeline>/home/mib-cri/icgc/pipelines/cancerresequencing-1.3-SNAPSHOT/pipelines/TargetQC_Pipeline.xml</pipeline>
+    <tempDirectory>${WorkingDirectory}/temp</tempDirectory>
+    <summaryFile errorsOnly="true">${WorkingDirectory}/errors</summaryFile>
+    <taskDirectories>
+      <directory>${install}/tasks</directory>
+      <directory>tasks</directory>
+
+    </taskDirectories>
+    
+    <executionConfiguration>
+        <execution mode="lsf">
+            <lsfOutputDirectory>${temp}/JobOutputs</lsfOutputDirectory>
+            <queue>bioinformatics</queue>
+            <maximumSubmittedJobs>75</maximumSubmittedJobs>
+        </execution>
+        <execution mode="local">
+            <maxCpuResources>1</maxCpuResources>
+        </execution>
+    </executionConfiguration>
+    <variables>
+      
+<outDir>/lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago/</outDir>
+
+<WorkingDirectory>//lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago</WorkingDirectory>
+
+
+<refFASTA>/lustre/reference_data/mib-cri/Genomes/homo_sapiens/GRCh37/fasta/singlefile/homo_sapiens.fa</refFASTA>
+
+<regionsFile>/lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago/hglft_genome_4d74_48c50.bed</regionsFile>
+<offregionsFile>offTarget.bed</offregionsFile>
+
+<MergedBams>/lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago/MergedBams</MergedBams>
+
+<CleanedBams>/lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago/CleanedBams</CleanedBams>
+
+<SampleSheet>/lustre/mib-cri/dunnin01/data/paired_end/gDNA/Santiago/SampleSheet.csv</SampleSheet>
+
+<chrFiles>/lustre/reference_data/mib-cri/Genomes/homo_sapiens/GRCh37/fasta/whole_genome/</chrFiles>
+<genome>/lustre/reference_data/mib-cri/SV_Pipeline/hg19_chr</genome>
+
+<blatserver>uk-cri-lbio09</blatserver>
+
+<blatport>9090</blatport>
+
+<ref_2bit>/home/mib-cri/data/hg19.2bit</ref_2bit>
+    </variables>
+  <specialisations>
+    <specialisation identifier="CRC2_034Ncol" active="true">
+      <variables>
+<Barcode>CRC2_034Ncol</Barcode>
+<Sample>CRC2_034Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_023T1" active="true">
+      <variables>
+<Barcode>CRC2_023T1</Barcode>
+<Sample>CRC2_023T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_53T" active="true">
+      <variables>
+<Barcode>CRC2_53T</Barcode>
+<Sample>CRC2_53T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_044AD1" active="true">
+      <variables>
+<Barcode>CRC2_044AD1</Barcode>
+<Sample>CRC2_044AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ad1" active="true">
+      <variables>
+<Barcode>CRC2_009Ad1</Barcode>
+<Sample>CRC2_009Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_041NA" active="true">
+      <variables>
+<Barcode>CRC2_041NA</Barcode>
+<Sample>CRC2_041NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_017Ad1" active="true">
+      <variables>
+<Barcode>CRC2_017Ad1</Barcode>
+<Sample>CRC2_017Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_041NC" active="true">
+      <variables>
+<Barcode>CRC2_041NC</Barcode>
+<Sample>CRC2_041NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_045Ad" active="true">
+      <variables>
+<Barcode>CRC2_045Ad</Barcode>
+<Sample>CRC2_045Ad</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_042NA" active="true">
+      <variables>
+<Barcode>CRC2_042NA</Barcode>
+<Sample>CRC2_042NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_039Ad1" active="true">
+      <variables>
+<Barcode>CRC2_039Ad1</Barcode>
+<Sample>CRC2_039Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_55T" active="true">
+      <variables>
+<Barcode>CRC2_55T</Barcode>
+<Sample>CRC2_55T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_44NC" active="true">
+      <variables>
+<Barcode>CRC2_44NC</Barcode>
+<Sample>CRC2_44NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_020T1" active="true">
+      <variables>
+<Barcode>CRC2_020T1</Barcode>
+<Sample>CRC2_020T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_041AD1" active="true">
+      <variables>
+<Barcode>CRC2_041AD1</Barcode>
+<Sample>CRC2_041AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_44T" active="true">
+      <variables>
+<Barcode>CRC2_44T</Barcode>
+<Sample>CRC2_44T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_016T1" active="true">
+      <variables>
+<Barcode>CRC2_016T1</Barcode>
+<Sample>CRC2_016T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_002NA" active="true">
+      <variables>
+<Barcode>CRC2_002NA</Barcode>
+<Sample>CRC2_002NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_010AD1" active="true">
+      <variables>
+<Barcode>CRC2_010AD1</Barcode>
+<Sample>CRC2_010AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="2819N" active="true">
+      <variables>
+<Barcode>2819N</Barcode>
+<Sample>2819N</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="HCT-116" active="true">
+      <variables>
+<Barcode>HCT-116</Barcode>
+<Sample>HCT-116</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_049Ad1" active="true">
+      <variables>
+<Barcode>CRC2_049Ad1</Barcode>
+<Sample>CRC2_049Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_038T1" active="true">
+      <variables>
+<Barcode>CRC2_038T1</Barcode>
+<Sample>CRC2_038T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_49T" active="true">
+      <variables>
+<Barcode>CRC2_49T</Barcode>
+<Sample>CRC2_49T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_023NA" active="true">
+      <variables>
+<Barcode>CRC2_023NA</Barcode>
+<Sample>CRC2_023NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ad2" active="true">
+      <variables>
+<Barcode>CRC2_009Ad2</Barcode>
+<Sample>CRC2_009Ad2</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_22T" active="true">
+      <variables>
+<Barcode>CRC2_22T</Barcode>
+<Sample>CRC2_22T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_010NCOL" active="true">
+      <variables>
+<Barcode>CRC2_010NCOL</Barcode>
+<Sample>CRC2_010NCOL</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_048Ad2" active="true">
+      <variables>
+<Barcode>CRC2_048Ad2</Barcode>
+<Sample>CRC2_048Ad2</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_24NC" active="true">
+      <variables>
+<Barcode>CRC2_24NC</Barcode>
+<Sample>CRC2_24NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_001NC" active="true">
+      <variables>
+<Barcode>CRC2_001NC</Barcode>
+<Sample>CRC2_001NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_020Ad1" active="true">
+      <variables>
+<Barcode>CRC2_020Ad1</Barcode>
+<Sample>CRC2_020Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_049Ncol" active="true">
+      <variables>
+<Barcode>CRC2_049Ncol</Barcode>
+<Sample>CRC2_049Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_024NA" active="true">
+      <variables>
+<Barcode>CRC2_024NA</Barcode>
+<Sample>CRC2_024NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="2819T" active="true">
+      <variables>
+<Barcode>2819T</Barcode>
+<Sample>2819T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ncol" active="true">
+      <variables>
+<Barcode>CRC2_009Ncol</Barcode>
+<Sample>CRC2_009Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_039T1" active="true">
+      <variables>
+<Barcode>CRC2_039T1</Barcode>
+<Sample>CRC2_039T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_029NC" active="true">
+      <variables>
+<Barcode>CRC2_029NC</Barcode>
+<Sample>CRC2_029NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_033T1" active="true">
+      <variables>
+<Barcode>CRC2_033T1</Barcode>
+<Sample>CRC2_033T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="LT7" active="true">
+      <variables>
+<Barcode>LT7</Barcode>
+<Sample>LT7</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_24T1" active="true">
+      <variables>
+<Barcode>CRC2_24T1</Barcode>
+<Sample>CRC2_24T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_045Ncol" active="true">
+      <variables>
+<Barcode>CRC2_045Ncol</Barcode>
+<Sample>CRC2_045Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_37T1" active="true">
+      <variables>
+<Barcode>CRC2_37T1</Barcode>
+<Sample>CRC2_37T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_040AD1" active="true">
+      <variables>
+<Barcode>CRC2_040AD1</Barcode>
+<Sample>CRC2_040AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_035NA" active="true">
+      <variables>
+<Barcode>CRC2_035NA</Barcode>
+<Sample>CRC2_035NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="LT3" active="true">
+      <variables>
+<Barcode>LT3</Barcode>
+<Sample>LT3</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_020NA" active="true">
+      <variables>
+<Barcode>CRC2_020NA</Barcode>
+<Sample>CRC2_020NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ad4" active="true">
+      <variables>
+<Barcode>CRC2_009Ad4</Barcode>
+<Sample>CRC2_009Ad4</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_22NA" active="true">
+      <variables>
+<Barcode>CRC2_22NA</Barcode>
+<Sample>CRC2_22NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_040T1" active="true">
+      <variables>
+<Barcode>CRC2_040T1</Barcode>
+<Sample>CRC2_040T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_048Ncol" active="true">
+      <variables>
+<Barcode>CRC2_048Ncol</Barcode>
+<Sample>CRC2_048Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_034T1" active="true">
+      <variables>
+<Barcode>CRC2_034T1</Barcode>
+<Sample>CRC2_034T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_047T1" active="true">
+      <variables>
+<Barcode>CRC2_047T1</Barcode>
+<Sample>CRC2_047T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_033Ad1" active="true">
+      <variables>
+<Barcode>CRC2_033Ad1</Barcode>
+<Sample>CRC2_033Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_43T" active="true">
+      <variables>
+<Barcode>CRC2_43T</Barcode>
+<Sample>CRC2_43T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_010T1rpt" active="true">
+      <variables>
+<Barcode>CRC2_010T1rpt</Barcode>
+<Sample>CRC2_010T1rpt</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_17T1" active="true">
+      <variables>
+<Barcode>CRC2_17T1</Barcode>
+<Sample>CRC2_17T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_043Ncol" active="true">
+      <variables>
+<Barcode>CRC2_043Ncol</Barcode>
+<Sample>CRC2_043Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_023Ad1" active="true">
+      <variables>
+<Barcode>CRC2_023Ad1</Barcode>
+<Sample>CRC2_023Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_017NC" active="true">
+      <variables>
+<Barcode>CRC2_017NC</Barcode>
+<Sample>CRC2_017NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_008NC" active="true">
+      <variables>
+<Barcode>CRC2_008NC</Barcode>
+<Sample>CRC2_008NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_035AD1" active="true">
+      <variables>
+<Barcode>CRC2_035AD1</Barcode>
+<Sample>CRC2_035AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_017NA" active="true">
+      <variables>
+<Barcode>CRC2_017NA</Barcode>
+<Sample>CRC2_017NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="LT9" active="true">
+      <variables>
+<Barcode>LT9</Barcode>
+<Sample>LT9</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_048Ad" active="true">
+      <variables>
+<Barcode>CRC2_048Ad</Barcode>
+<Sample>CRC2_048Ad</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_020NC" active="true">
+      <variables>
+<Barcode>CRC2_020NC</Barcode>
+<Sample>CRC2_020NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_55N" active="true">
+      <variables>
+<Barcode>CRC2_55N</Barcode>
+<Sample>CRC2_55N</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ad5" active="true">
+      <variables>
+<Barcode>CRC2_009Ad5</Barcode>
+<Sample>CRC2_009Ad5</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_029Ad1" active="true">
+      <variables>
+<Barcode>CRC2_029Ad1</Barcode>
+<Sample>CRC2_029Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_002NC" active="true">
+      <variables>
+<Barcode>CRC2_002NC</Barcode>
+<Sample>CRC2_002NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_42T1" active="true">
+      <variables>
+<Barcode>CRC2_42T1</Barcode>
+<Sample>CRC2_42T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_035T1" active="true">
+      <variables>
+<Barcode>CRC2_035T1</Barcode>
+<Sample>CRC2_035T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_001NA" active="true">
+      <variables>
+<Barcode>CRC2_001NA</Barcode>
+<Sample>CRC2_001NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_029NA" active="true">
+      <variables>
+<Barcode>CRC2_029NA</Barcode>
+<Sample>CRC2_029NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_046T1" active="true">
+      <variables>
+<Barcode>CRC2_046T1</Barcode>
+<Sample>CRC2_046T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_038Ncol" active="true">
+      <variables>
+<Barcode>CRC2_038Ncol</Barcode>
+<Sample>CRC2_038Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_039Ncol" active="true">
+      <variables>
+<Barcode>CRC2_039Ncol</Barcode>
+<Sample>CRC2_039Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_037AD1" active="true">
+      <variables>
+<Barcode>CRC2_037AD1</Barcode>
+<Sample>CRC2_037AD1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_038Ad1" active="true">
+      <variables>
+<Barcode>CRC2_038Ad1</Barcode>
+<Sample>CRC2_038Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_011T1" active="true">
+      <variables>
+<Barcode>CRC2_011T1</Barcode>
+<Sample>CRC2_011T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_008NA" active="true">
+      <variables>
+<Barcode>CRC2_008NA</Barcode>
+<Sample>CRC2_008NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_009Ad3" active="true">
+      <variables>
+<Barcode>CRC2_009Ad3</Barcode>
+<Sample>CRC2_009Ad3</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_001T1" active="true">
+      <variables>
+<Barcode>CRC2_001T1</Barcode>
+<Sample>CRC2_001T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_023NC" active="true">
+      <variables>
+<Barcode>CRC2_023NC</Barcode>
+<Sample>CRC2_023NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_034Ad1" active="true">
+      <variables>
+<Barcode>CRC2_034Ad1</Barcode>
+<Sample>CRC2_034Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_014Ad1" active="true">
+      <variables>
+<Barcode>CRC2_014Ad1</Barcode>
+<Sample>CRC2_014Ad1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_040NC" active="true">
+      <variables>
+<Barcode>CRC2_040NC</Barcode>
+<Sample>CRC2_040NC</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_014T1" active="true">
+      <variables>
+<Barcode>CRC2_014T1</Barcode>
+<Sample>CRC2_014T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_008T1" active="true">
+      <variables>
+<Barcode>CRC2_008T1</Barcode>
+<Sample>CRC2_008T1</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_008Ad3" active="true">
+      <variables>
+<Barcode>CRC2_008Ad3</Barcode>
+<Sample>CRC2_008Ad3</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_45T" active="true">
+      <variables>
+<Barcode>CRC2_45T</Barcode>
+<Sample>CRC2_45T</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_040NA" active="true">
+      <variables>
+<Barcode>CRC2_040NA</Barcode>
+<Sample>CRC2_040NA</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_033Ncol" active="true">
+      <variables>
+<Barcode>CRC2_033Ncol</Barcode>
+<Sample>CRC2_033Ncol</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="LT6" active="true">
+      <variables>
+<Barcode>LT6</Barcode>
+<Sample>LT6</Sample>
+
+    </variables>
+  </specialisation>
+    <specialisation identifier="CRC2_37NC" active="true">
+      <variables>
+<Barcode>CRC2_37NC</Barcode>
+<Sample>CRC2_37NC</Sample>
+
+    </variables>
+  </specialisation>
+  </specialisations>
+</meta:metadata>

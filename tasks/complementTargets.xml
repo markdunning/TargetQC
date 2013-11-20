@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<task:task xmlns:task="http://cancerresearchuk.org/task/1.3"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://cancerresearchuk.org/task/1.3 http://uk-cri-lbio01/schema/workflow/task-1.3.xsd">
+
+    <name>complementTargets</name>
+
+    <program type="commandLine">
+      <executable>
+	
+	/home/mib-cri/software/BEDTools/bin/slopBed -b 100 -i ${regionsFile} -g ${genome}  | mergeBed -i stdin  | complementBed -i stdin -g ${genome} > ${offregionsFile}
+      </executable>
+    </program>
+
+    <inputs>
+	<input name="regionsFile" required="true" description="The regions to calculate coverage across"/>
+	<input name="genome" required="true" description="chromosome length file"/>
+    </inputs>
+
+    <outputs> 
+      <output name="offregionsFile" required="true" safeNaming="false" description="File containing coverage data"/>
+    </outputs>  
+    
+    <arguments>
+      <arg name="bp" required="false" default="100" description="Number of base pairs to extend targets prior to making complement"/>
+    </arguments>  
+      
+   
+</task:task>
